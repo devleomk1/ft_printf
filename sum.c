@@ -28,6 +28,7 @@ int main(void)
     printf("[%0*d]\n", 5, 10);    //[00010]
     printf("% d\n", 10);          // 10
     printf("% d\n", -10);         //-10
-    printf("%.2f\n", 3.141592);    //
+    printf("%.2f\n", 3.141592);   //3.14
+
     return (0);
 }
