@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 15:47:13 by jisokang          #+#    #+#              #
-#    Updated: 2021/03/09 16:58:00 by jisokang         ###   ########.fr        #
+#    Updated: 2021/03/16 13:11:13 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,22 +18,21 @@ CFLAGS		=	-Wall -Wextra -Werror
 AR			=	ar rcs
 RM			=	rm -f
 
-SRCS		=	ft_printf.c
+SRCS		=	./ft_printf.c
 
 OBJS		=	$(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
+	make all -C $(LIBFT)/
+	cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
 	$(AR) $@ $^
-
-bonus: $(OBJS_BONUS)
-	$(AR) $(NAME) $^
 
 all: $(NAME)
 
-clean:
+clean: clean
 	$(RM) $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
 	$(RM) $(NAME)
 
-re: clean all
+re: fclean all
