@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/22 16:52:24 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/22 20:02:19 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	parse_symbols(const char *format, va_list ap)
 				i++;
 			}
 			//atoi get width
+				//* va_arg
+				//(!!!!) * < 0, '-' flag ON
 			//atoi get precision here
+				//* va_arg
 
 			if(format[i] == 'd' || format[i] == 'i')
 			{
