@@ -6,12 +6,13 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/22 16:34:39 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/22 16:52:24 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+/* 구조체 초기화 함수 */
 void	init_struct(t_info info)
 {
 	info.minus = FALSE;
@@ -19,7 +20,7 @@ void	init_struct(t_info info)
 	info.width = 0;
 	info.precison = 0;
 	info.num_base = 10;
-	info.num_sign = PLUS;
+	info.num_sign = 0;
 }
 
 // 이거 c파일로 Libft에 빼야됨
@@ -28,10 +29,9 @@ int	ft_putstr_len(char *format, int len)
 	write(1, format, len);
 	return (len);
 }
-
+/* 분석하는 함수 */
 int	parse_symbols(const char *format, va_list ap)
 {
-	/* parse = 분석 */
 	t_info		*info;
 	int			printed;
 	long long	temp_num;
@@ -63,7 +63,6 @@ int	parse_symbols(const char *format, va_list ap)
 			//atoi get width
 			//atoi get precision here
 
-
 			if(format[i] == 'd' || format[i] == 'i')
 			{
 				temp_num = va_arg(ap, int);
@@ -71,8 +70,6 @@ int	parse_symbols(const char *format, va_list ap)
 				num = temp_num;
 				i++;
 			}
-
-
 			//check status here
 
 			word = (char [21]){};
