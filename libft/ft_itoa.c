@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 05:14:54 by jisokang          #+#    #+#             */
-/*   Updated: 2021/02/20 19:54:36 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:03:16 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 long int	ft_abs(long int nbr)
 {
 	if (nbr < 0)
-		return(-nbr);
+		return (-nbr);
 	else
-		return(nbr);
+		return (nbr);
 }
 
-int			ft_len(long int nbr)
+int	ft_len(long int nbr)
 {
 	int	len;
 
@@ -36,7 +36,7 @@ int			ft_len(long int nbr)
 	return (len);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	int		len;
 	int		sign;
@@ -47,7 +47,8 @@ char		*ft_itoa(int n)
 	else
 		sign = 1;
 	len = ft_len(n);
-	if ((str = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
 		return (0);
 	str[len] = '\0';
 	len--;

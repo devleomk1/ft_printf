@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 15:00:37 by jisokang          #+#    #+#             */
-/*   Updated: 2021/02/20 19:56:21 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:18:29 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup(s1));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	if ((newstr = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1))) == NULL)
-		return (NULL);
+	newstr = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (newstr == NULL)
+		return (0);
 	ft_strlcpy(newstr, s1, s1_len + 1);
 	ft_strlcat(newstr, s2, s1_len + s2_len + 1);
 	return (newstr);

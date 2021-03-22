@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 03:09:27 by jisokang          #+#    #+#             */
-/*   Updated: 2021/02/20 19:56:16 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:16:51 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*ft_strdup(const char *s1)
 	size_t	len;
 
 	len = ft_strlen(s1);
-	if ((s2 = malloc(sizeof(char) * (len + 1))) == NULL)
+	s2 = malloc(sizeof(char) * (len + 1));
+	if (s2 == NULL)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\0')

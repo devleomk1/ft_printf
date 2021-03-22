@@ -18,15 +18,18 @@ print_number.c
 */
 
 /*
-
 앞	중간	끝
 ___값___
 000
 */
 
 /*
--
-0
-.
-*
+구조체
+int		minus	T/F
+int		zero	T/F
+int		width
+int		precision
+int		num_base
+int		num_sign
+char	type
 */

@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 03:06:12 by jisokang          #+#    #+#             */
-/*   Updated: 2021/02/20 19:50:32 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:48:37 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	*ft_calloc(size_t count, size_t size)
 {
 	void	*new;
 
-	if ((new = malloc(count * size)) == NULL)
+	new = malloc(count * size);
+	if (new == NULL)
 		return (NULL);
 	ft_bzero(new, (count * size));
 	return (new);

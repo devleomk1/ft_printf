@@ -6,13 +6,13 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 07:44:44 by jisokang          #+#    #+#             */
-/*   Updated: 2021/02/20 19:56:02 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:16:07 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		get_str_count(const char *str, char c)
+size_t	get_str_count(const char *str, char c)
 {
 	size_t	i;
 	size_t	count;
@@ -76,7 +76,7 @@ static void	do_split(char const *s, char c, char **str)
 	}
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**str;
 	size_t	str_count;

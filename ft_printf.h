@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/16 15:59:16 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/22 14:48:36 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,24 @@
 # define FALSE 0
 # define ERROR -1
 
-# define digits "0123456789ABCDEF"
+# define PLUS 1
+# define MINUS -1
+
+# define DIGITS "0123456789ABCDEF"
+
+/*
+소문자 바꾸기는 ascii 값 차이 +40을 해주면 된다. 아님 ft_tolower쓰던가
+*/
 
 typedef struct	s_info
 {
 	int			minus;
 	int			zero;
 	int			width;
-	int			prec;
+	int			precison;
+	int			num_base;
+	int			num_sign;
 	char		type;
-	int			nbr_base;
-	int			nbr_sign;
 }				t_info;
 
 int	ft_printf(const char *format, ...);

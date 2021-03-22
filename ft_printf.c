@@ -6,11 +6,21 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/16 15:59:14 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/22 14:50:51 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	init_struct(t_info info)
+{
+	info.minus = FALSE;
+	info.zero = FALSE;
+	info.width = 0;
+	info.precison = 0;
+	info.num_base = 10;
+	info.num_sign = PLUS;
+}
 
 int	ft_putstr_len(char *format, int len)
 {
@@ -22,16 +32,16 @@ int	parse_symbols(const char *format, va_list ap)
 {
 	/* parse = 분석 */
 	t_info		*info;
-	size_t		i;
-	size_t		base;		//진법
 	int			printed;
 	long long	temp_num;
 	unsigned long long num;
 	char		*word;		//출력 할 단위
+	size_t		i;
 	size_t		len;
 
 	if(!(info = malloc(sizeof(t_info) * 1)))
 		return (ERROR);
+	init_struct(*info);
 	i = 0;
 	printed = 0;
 	while(format[i] != 0)
@@ -42,7 +52,7 @@ int	parse_symbols(const char *format, va_list ap)
 			if(format[i] == 'd')
 			{
 				temp_num = va_arg(ap, int);
-				base = 10;
+				info->num_base = 10;
 				num = temp_num;
 				i++;
 			}
@@ -51,8 +61,8 @@ int	parse_symbols(const char *format, va_list ap)
 			len = 20;
 			while (num != 0)
 			{
-				word[len--] = digits[num % base];
-				num = num / base;
+				word[len--] = DIGITS[num % info->num_base];
+				num = num / info->num_base;
 			}
 			word = &word[len + 1];
 			len = 20 - len;

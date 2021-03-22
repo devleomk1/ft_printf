@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:31:45 by jisokang          #+#    #+#             */
-/*   Updated: 2021/02/20 19:55:51 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/17 16:15:32 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	display_nbr(int n, int fd)
 {
 	if (n >= 10)
 		display_nbr(n / 10, fd);
-	write(fd, &"0123456789"[n % 10], 1);
+	write(fd, &"0123456789" [n % 10], 1);
 }
 
 void	ft_putnbr_fd(int n, int fd)
