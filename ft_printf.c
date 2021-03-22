@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/22 14:50:51 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/22 16:34:39 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_struct(t_info info)
 	info.num_sign = PLUS;
 }
 
+// 이거 c파일로 Libft에 빼야됨
 int	ft_putstr_len(char *format, int len)
 {
 	write(1, format, len);
@@ -49,13 +50,30 @@ int	parse_symbols(const char *format, va_list ap)
 		if (format[i] == '%')
 		{
 			i++;
-			if(format[i] == 'd')
+			if(format[i] == '-')
+			{
+				info->minus = TRUE;
+				i++;
+			}
+			if(format[i] == '0')
+			{
+				info->zero = TRUE;
+				i++;
+			}
+			//atoi get width
+			//atoi get precision here
+
+
+			if(format[i] == 'd' || format[i] == 'i')
 			{
 				temp_num = va_arg(ap, int);
 				info->num_base = 10;
 				num = temp_num;
 				i++;
 			}
+
+
+			//check status here
 
 			word = (char [21]){};
 			len = 20;

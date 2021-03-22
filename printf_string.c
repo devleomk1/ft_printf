@@ -1,27 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   printf_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/10 16:43:44 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/22 15:45:21 by jisokang         ###   ########.fr       */
+/*   Created: 2021/03/22 15:19:58 by jisokang          #+#    #+#             */
+/*   Updated: 2021/03/22 15:19:59 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	main(void)
-{
-	//ft_printf("ft_printf : Hello %d World %d\n", 1, 2);
-	printf("   printf : Hello %d World %d\n", 1, 2);
-	printf("   printf : |%1234|\n");
-	/*
-	printf("----------------------------------\n");
-	printf("|%5c|\n", 'A');
-	printf("|%-5c|\n", 'A');
-	printf("|%-c|", 'A');
-	printf("|%c|", 'A');
-	*/
-}
