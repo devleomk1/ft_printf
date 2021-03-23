@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/22 20:02:19 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/23 16:52:41 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,20 @@ void	init_struct(t_info info)
 	info.minus = FALSE;
 	info.zero = FALSE;
 	info.width = 0;
-	info.precison = 0;
+	info.precison = 0; //-1?
 	info.num_base = 10;
 	info.num_sign = 0;
+}
+
+/* atoi */
+static int skip_atoi(const char **s)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isdigit(**s))
+		i = i * 10 + *((*s)++) - '0';
+	return i;
 }
 
 // 이거 c파일로 Libft에 빼야됨
@@ -37,41 +48,49 @@ int	parse_symbols(const char *format, va_list ap)
 	long long	temp_num;
 	unsigned long long num;
 	char		*word;		//출력 할 단위
-	size_t		i;
 	size_t		len;
 
 	if(!(info = malloc(sizeof(t_info) * 1)))
 		return (ERROR);
 	init_struct(*info);
-	i = 0;
 	printed = 0;
-	while(format[i] != 0)
+	while(*format != 0)
 	{
-		if (format[i] == '%')
+		if (*format == '%')
 		{
-			i++;
-			if(format[i] == '-')
+			format++;
+			if(*format == '-')
 			{
 				info->minus = TRUE;
-				i++;
+				format++;
 			}
-			if(format[i] == '0')
+			if(*format == '0')
 			{
 				info->zero = TRUE;
-				i++;
+				format++;
 			}
-			//atoi get width
-				//* va_arg
-				//(!!!!) * < 0, '-' flag ON
+			/* atoi get width */
+			if (ft_isdigit(*format) == TRUE)
+				info->width = skip_atoi(&format);	//동작확인
+			else if (*format == '*')
+			{
+				format++;
+				info->width = va_arg(ap,int);
+				if (info->width < 0)
+				{
+					info->width = -(info->width);
+					info->minus = TRUE;				//'-' flag TRUE
+				}
+			}
 			//atoi get precision here
 				//* va_arg
 
-			if(format[i] == 'd' || format[i] == 'i')
+			if(*format == 'd' || *format == 'i')
 			{
 				temp_num = va_arg(ap, int);
 				info->num_base = 10;
 				num = temp_num;
-				i++;
+				format++;
 			}
 			//check status here
 
@@ -86,8 +105,8 @@ int	parse_symbols(const char *format, va_list ap)
 			len = 20 - len;
 			printed = printed + ft_putstr_len(word, len);
 		}
-		ft_putchar_fd(format[i], 1);
-		i++;
+		ft_putchar_fd(*format, 1);
+		format++;
 	}
 	free(info);
 	return (printed);

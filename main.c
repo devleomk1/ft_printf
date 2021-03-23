@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:43:44 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/22 16:52:36 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/23 15:24:52 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /* 테스트용 main 함수 */
 int	main(void)
 {
-	printf("   printf : Hello %d World %d\n", 1, 2);
-	printf("   printf : |%1234|\n");
+	//printf("   printf : Hello %d World %d\n", 1, 2);
+	ft_printf("   ft_printf : %123d\n", 10);
+
 }
