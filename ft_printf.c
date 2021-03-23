@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/23 16:52:41 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/23 17:14:40 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	parse_symbols(const char *format, va_list ap)
 	char		*word;		//출력 할 단위
 	size_t		len;
 
-	if(!(info = malloc(sizeof(t_info) * 1)))
+	info = malloc(sizeof(t_info) * 1);
+	if(!info)
 		return (ERROR);
 	init_struct(*info);
 	printed = 0;
@@ -75,15 +76,29 @@ int	parse_symbols(const char *format, va_list ap)
 			else if (*format == '*')
 			{
 				format++;
-				info->width = va_arg(ap,int);
+				info->width = va_arg(ap, int);
 				if (info->width < 0)
 				{
-					info->width = -(info->width);
+					info->width = -(info->width);	// *로 width값이 음수값으로 들어오면
 					info->minus = TRUE;				//'-' flag TRUE
 				}
 			}
-			//atoi get precision here
+			/* atoi get precision here */
 				//* va_arg
+				//if (precision < 0) -> precision = 0;
+			if (*format == '.')
+			{
+				format++;
+				if (ft_isdigit(*format))
+					info->precison = skip_atoi(&format);
+				else if (*format == '*')
+				{
+					format++;
+					info->precison = va_arg(ap, int);
+				}
+				if (info->precison < 0)
+					info->precison = 0;
+			}
 
 			if(*format == 'd' || *format == 'i')
 			{
