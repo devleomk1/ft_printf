@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:43:44 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/23 15:24:52 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:19:34 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 int	main(void)
 {
 	//printf("   printf : Hello %d World %d\n", 1, 2);
-	ft_printf("   ft_printf : %123d\n", 10);
+	ft_printf("   ft_printf : %c\n", 'a');
 
 }

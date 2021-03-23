@@ -10,7 +10,6 @@
  * Oh, it's a waste of space, but oh-so-yummy for debugging.  This
  * version of printf() does not include 64-bit support.  "Live with
  * it."
- *
  */
 
 #include "boot.h"

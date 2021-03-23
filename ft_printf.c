@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/23 17:14:40 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:34:35 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	parse_symbols(const char *format, va_list ap)
 	char		*word;		//출력 할 단위
 	size_t		len;
 
+	word = (char [21]){};
 	info = malloc(sizeof(t_info) * 1);
 	if(!info)
 		return (ERROR);
@@ -99,6 +100,18 @@ int	parse_symbols(const char *format, va_list ap)
 				if (info->precison < 0)
 					info->precison = 0;
 			}
+			if (*format == 'c')
+			{
+				if (info->minus == TRUE)
+					while(--(info->width) > 0)
+					{
+						write(1, " ", 1);
+					}
+				word = (unsigned char)va_arg(ap, int);
+				while (--(info->width) > 0)
+					write(1, " ", 1);
+				format++;
+			}
 
 			if(*format == 'd' || *format == 'i')
 			{
@@ -109,7 +122,6 @@ int	parse_symbols(const char *format, va_list ap)
 			}
 			//check status here
 
-			word = (char [21]){};
 			len = 20;
 			while (num != 0)
 			{
