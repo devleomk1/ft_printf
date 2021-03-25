@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/23 20:34:35 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/25 17:25:12 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,23 @@ int	parse_symbols(const char *format, va_list ap)
 	int			printed;
 	long long	temp_num;
 	unsigned long long num;
-	char		*word;		//출력 할 단위
+	char		*str;		//출력 할 문자열
+	char		*temp;
 	size_t		len;
 
-	word = (char [21]){};
+
+
+	printed = 0;
+	/*---------- info ------------*/
 	info = malloc(sizeof(t_info) * 1);
 	if(!info)
 		return (ERROR);
 	init_struct(*info);
-	printed = 0;
+	/*----------------------------*/
 	while(*format != 0)
 	{
+		str = (char [21]){};	//출력할 문자열의 MAX 길이는 20 + \0
+		temp = str;
 		if (*format == '%')
 		{
 			format++;
@@ -84,6 +90,7 @@ int	parse_symbols(const char *format, va_list ap)
 					info->minus = TRUE;				//'-' flag TRUE
 				}
 			}
+
 			/* atoi get precision here */
 				//* va_arg
 				//if (precision < 0) -> precision = 0;
@@ -100,19 +107,18 @@ int	parse_symbols(const char *format, va_list ap)
 				if (info->precison < 0)
 					info->precison = 0;
 			}
+
+
 			if (*format == 'c')
 			{
-				if (info->minus == TRUE)
+				if (info->minus != TRUE)
 					while(--(info->width) > 0)
-					{
-						write(1, " ", 1);
-					}
-				word = (unsigned char)va_arg(ap, int);
+						*str++ = ' ';
+				*str++ = (unsigned char)va_arg(ap, int);
 				while (--(info->width) > 0)
-					write(1, " ", 1);
+					*str++ = ' ';
 				format++;
 			}
-
 			if(*format == 'd' || *format == 'i')
 			{
 				temp_num = va_arg(ap, int);
@@ -122,15 +128,30 @@ int	parse_symbols(const char *format, va_list ap)
 			}
 			//check status here
 
+			/*---------- prototype cal ------------*/
+
 			len = 20;
+			/*
 			while (num != 0)
 			{
-				word[len--] = DIGITS[num % info->num_base];
+				str[len--] = DIGITS[num % info->num_base];
 				num = num / info->num_base;
 			}
-			word = &word[len + 1];
+			str = &str[len + 1];
 			len = 20 - len;
-			printed = printed + ft_putstr_len(word, len);
+			*/
+			*str = '\0';
+			printed = printed + ft_putstr_len(temp, len);
+			/*---------- prototype cal ------------*/
+
+/*
+			int j = 0;
+			while (j < 20)
+			{
+				printf("|%d|", temp[j]);
+				j++;
+			}
+*/
 		}
 		ft_putchar_fd(*format, 1);
 		format++;
