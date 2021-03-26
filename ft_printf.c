@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/25 17:25:12 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:35:15 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,8 @@ int	parse_symbols(const char *format, va_list ap)
 			}
 */
 		}
-		ft_putchar_fd(*format, 1);
+		//ft_putchar_fd(*format, 1);
+		write(1, format, 1);
 		format++;
 	}
 	free(info);

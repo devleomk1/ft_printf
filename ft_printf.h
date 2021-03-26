@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/23 15:15:52 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/26 14:32:47 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ typedef struct	s_info
 
 int	ft_printf(const char *format, ...);
 int	parse_symbols(const char *format, va_list ap);
+
+/* printf_char */
+int	check_char(char *format, va_list ap, t_info *info, char *str);
 
 #endif
