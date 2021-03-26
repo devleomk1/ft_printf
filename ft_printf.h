@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/26 14:32:47 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/26 21:28:16 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define FALSE 0
 # define ERROR -1
 
-# define PLUS 1
-# define MINUS -1
+# define ENABLE 1
+# define DISABLE 0
 
 # define DIGITS "0123456789ABCDEF"
 
@@ -37,7 +37,7 @@ typedef struct	s_info
 	int			minus;
 	int			zero;
 	int			width;
-	int			precison;
+	int			precision;
 	int			num_base;
 	int			num_sign;
 	char		type;
