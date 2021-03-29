@@ -6,33 +6,47 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 15:47:13 by jisokang          #+#    #+#              #
-#    Updated: 2021/03/16 13:11:13 by jisokang         ###   ########.fr        #
+#    Updated: 2021/03/29 19:59:14 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	libft.a
+NAME		= libftprintf.a
+LIBFTDIR	= ./libft
+LIBFTFILE	= libft.a
 
-CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror
+CC		= gcc
+CFLAGS	= -Wall -Wextra -Werror
+AR		= ar rcs
+RM		= rm -f
 
-AR			=	ar rcs
-RM			=	rm -f
+SRCS	= ft_printf.c \
 
-SRCS		=	./ft_printf.c
+BSRCS	=
 
-OBJS		=	$(SRCS:.c=.o)
+OBJS	= $(SRCS:.c=.o)
+BOBJS	= $(BSRCS:.c=.o)
 
-$(NAME): $(OBJS)
-	make all -C $(LIBFT)/
-	cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
+.c.o:
+	$(CC) $(CFLAGS) -c $< -I.
+
+$(NAME) : $(OBJS)
+	make -C $(LIBFTDIR)
+	cp $(LIBFTDIR)/$(LIBFTFILE) $(NAME)
 	$(AR) $@ $^
 
-all: $(NAME)
+bonus : $(BOBJS)
+	$(AR) $(NAME) $^
 
-clean: clean
-	$(RM) $(OBJS) $(OBJS_BONUS)
+all : $(NAME)
 
-fclean: clean
+clean :
+	make -C $(LIBFTDIR) clean
+	$(RM) $(OBJS) $(BOBJS)
+
+fclean : clean
+	make -C $(LIBFTDIR) fclean
 	$(RM) $(NAME)
 
-re: fclean all
+re : clean all
+
+.PHONY : all clean fclean re bonus

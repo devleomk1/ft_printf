@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/29 15:33:53 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/29 20:38:21 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,82 +40,92 @@ int	ft_putstr_len(char *format, int len)
 	write(1, format, len);
 	return (len);
 }
+void	ft_parse_flag(const char **format, t_info *info)
+{
+	if (**format == '-')
+	{
+		info->minus = TRUE;
+		(*format)++;
+	}
+	if (**format == '0')
+	{
+		info->zero = TRUE;
+		(*format)++;
+	}
+}
+/* atoi get width */
+void	ft_parse_width(const char **format, t_info *info, va_list ap)
+{
+
+	if (ft_isdigit(**format) == TRUE)
+		info->width = skip_atoi(format);
+	else if (**format == '*')
+	{
+		(*format)++;
+		info->width = va_arg(ap, int);
+		if (info->width < 0)
+		{
+			info->width = -(info->width);	// *로 width값이 음수값으로 들어오면
+			info->minus = TRUE;				//'-' flag TRUE
+		}
+	}
+}
+/* atoi get precision here */
+void	ft_parse_precision(const char **format, t_info *info, va_list ap)
+{
+	if (**format == '.')
+	{
+		(*format)++;
+		if (ft_isdigit(**format))
+			info->precision = skip_atoi(format);
+		else if (**format == '*')
+		{
+			(*format)++;
+			info->precision = va_arg(ap, int);
+		}
+		if (info->precision < 0)
+			info->precision = 0;
+	}
+}
+
 /* 분석하는 함수 */
-int	parse_symbols(const char *format, va_list ap)
+int	ft_parse_symbols(const char *format, va_list ap)
 {
 	t_info			*info;
 	int				printed;
 	long long		num;
 	char			*str;		//출력 할 문자열
 	char			*temp;
-	size_t			i;
+	int				i;
 
 	printed = 0;
 	/*---------- info ------------*/
 	info = malloc(sizeof(t_info) * 1);
 	if(!info)
 		return (ERROR);
-	/*----------------------------*/
 
-	//str = (char [21]){};	//출력할 문자열의 MAX 길이는 20 + '\0'
-	//temp = str;
 	while(*format != 0)
 	{
+		/* 이 칭구들을 각각 type별로 넣어주면 더 줄일 수 있어. */
 		init_struct(*info);
 		str = (char [21]){};	//출력할 문자열의 MAX 길이는 20 + '\0'
 		temp = str;
 		if (*format != '%')
 		{
-			//*str++ = *format;
 			printed += write(1, format, 1);
 			format++;
 		}
 		if (*format == '%')
 		{
 			format++;
-			if (*format == '-')
-			{
-				info->minus = TRUE;
-				format++;
-			}
-			if (*format == '0')
-			{
-				info->zero = TRUE;
-				format++;
-			}
-			/* atoi get width */
-			if (ft_isdigit(*format) == TRUE)
-				info->width = skip_atoi(&format);	//동작확인
-			else if (*format == '*')
-			{
-				format++;
-				info->width = va_arg(ap, int);
-				if (info->width < 0)
-				{
-					info->width = -(info->width);	// *로 width값이 음수값으로 들어오면
-					info->minus = TRUE;				//'-' flag TRUE
-				}
-			}
+			/* get FLAG */
+			ft_parse_flag(&format, info);
+			/* get width & precision */
+			ft_parse_width(&format, info, ap);
+			ft_parse_precision(&format, info, ap);
 
-			/* atoi get precision here */
-				//* va_arg
-				//if (precision < 0) -> precision = 0;
-			if (*format == '.')
-			{
-				format++;
-				if (ft_isdigit(*format))
-					info->precision = skip_atoi(&format);
-				else if (*format == '*')
-				{
-					format++;
-					info->precision = va_arg(ap, int);
-				}
-				if (info->precision < 0)
-					info->precision = 0;
-			}
 			if (*format == 'c')
 			{
-				//printf("%c\n", *format);
 				if (info->minus != TRUE)
 					while(--(info->width) > 0)
 						*str++ = ' ';
@@ -123,10 +133,26 @@ int	parse_symbols(const char *format, va_list ap)
 				while (--(info->width) > 0)
 					*str++ = ' ';
 				format++;
-				//printf("%c\n", *format);
 				*str = '\0';
 				printed += write(1, temp, ft_strlen(temp));
 			}
+			if (*format == 's')
+			{
+				if (info->minus != TRUE)
+					while(--(info->width) > 0)
+						write(1, ' ', 1);
+				/* string out here */
+				while (/* condition */)
+				{
+					/* code */
+				}
+				while (--(info->width) > 0)
+					write(1, ' ', 1);
+				format++;
+				*str = '\0';
+				printed += write(1, temp, ft_strlen(temp));
+			}
+
 			else if(*format == 'd' || *format == 'i')
 			{
 				info->num_base = 10;
@@ -138,7 +164,7 @@ int	parse_symbols(const char *format, va_list ap)
 					(info->width)--;
 				}
 				format++;
-				/*---------- prototype cal ------------*/
+				/*---------- prototype cal : num에서 전부 동일하게 연산------------*/
 				i = 0;
 				char tmp_num[21];
 				if (num == 0)
@@ -168,22 +194,8 @@ int	parse_symbols(const char *format, va_list ap)
 				*str = '\0';
 				printed += write(1, temp, ft_strlen(temp));
 			}
-
-			/*---------- ------------- ------------*/
-/*
-			int j = 0;
-			while (j < 21)
-			{
-				printf("|%d|", temp[j]);
-				j++;
-			}
-*/
 		}
-
 	}
-	//*str = '\0';
-	//printed += write(1, temp, ft_strlen(temp));
-
 	free(info);
 	return (printed);
 }
@@ -194,7 +206,7 @@ int	ft_printf(const char *format, ...)
 	int printed;
 
 	va_start(ap, format);
-	printed = parse_symbols(format, ap);
+	printed = ft_parse_symbols(format, ap);
 	va_end(ap);
 	return (printed);
 }
