@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 01:12:40 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 01:14:44 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int	ft_parse_symbols(const char *format, va_list ap)
 				if (info->minus == DISABLE && info->zero == DISABLE)
 					while ((info->width)-- > 0)
 						*str++ = ' ';
-				/* -- number sign -- *//
+				/* -- number sign -- */
 				if (info->num_sign == -1)
 					*str++ = '-';
 				if (info->zero == ENABLE)
