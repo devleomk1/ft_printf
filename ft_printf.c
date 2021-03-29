@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/26 22:31:13 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/29 15:33:53 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int	parse_symbols(const char *format, va_list ap)
 	long long		num;
 	char			*str;		//출력 할 문자열
 	char			*temp;
-	size_t			len;
 	size_t			i;
-
-
 
 	printed = 0;
 	/*---------- info ------------*/
@@ -59,11 +56,20 @@ int	parse_symbols(const char *format, va_list ap)
 	if(!info)
 		return (ERROR);
 	/*----------------------------*/
+
+	//str = (char [21]){};	//출력할 문자열의 MAX 길이는 20 + '\0'
+	//temp = str;
 	while(*format != 0)
 	{
 		init_struct(*info);
 		str = (char [21]){};	//출력할 문자열의 MAX 길이는 20 + '\0'
 		temp = str;
+		if (*format != '%')
+		{
+			//*str++ = *format;
+			printed += write(1, format, 1);
+			format++;
+		}
 		if (*format == '%')
 		{
 			format++;
@@ -109,7 +115,7 @@ int	parse_symbols(const char *format, va_list ap)
 			}
 			if (*format == 'c')
 			{
-				printf("%c\n", *format);
+				//printf("%c\n", *format);
 				if (info->minus != TRUE)
 					while(--(info->width) > 0)
 						*str++ = ' ';
@@ -117,9 +123,11 @@ int	parse_symbols(const char *format, va_list ap)
 				while (--(info->width) > 0)
 					*str++ = ' ';
 				format++;
-				printf("%c\n", *format);
+				//printf("%c\n", *format);
+				*str = '\0';
+				printed += write(1, temp, ft_strlen(temp));
 			}
-			if(*format == 'd' || *format == 'i')
+			else if(*format == 'd' || *format == 'i')
 			{
 				info->num_base = 10;
 				num = va_arg(ap, int);
@@ -129,8 +137,7 @@ int	parse_symbols(const char *format, va_list ap)
 					num = -num;
 					(info->width)--;
 				}
-				//format++;
-				//check status here
+				format++;
 				/*---------- prototype cal ------------*/
 				i = 0;
 				char tmp_num[21];
@@ -158,10 +165,9 @@ int	parse_symbols(const char *format, va_list ap)
 					*str++ = tmp_num[i];
 				while (info->width > 0)
 					*str++ = ' ';
-
+				*str = '\0';
+				printed += write(1, temp, ft_strlen(temp));
 			}
-			*str = '\0';
-			printed += write(1, temp, ft_strlen(temp));
 
 			/*---------- ------------- ------------*/
 /*
@@ -173,9 +179,11 @@ int	parse_symbols(const char *format, va_list ap)
 			}
 */
 		}
-		printed += write(1, format, 1);
-		format++;
+
 	}
+	//*str = '\0';
+	//printed += write(1, temp, ft_strlen(temp));
+
 	free(info);
 	return (printed);
 }
