@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:43:44 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/29 20:30:47 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 01:04:36 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 int	main(void)
 {
 	int a = 0;
-	char *str = "0---------1---------2---------";
-
-	printf("%s", str);
-	//a = ft_printf("|%-15c|", 'B');
+	//printf("%-7d", 33);
+	a = ft_printf("|%05d|", 43);
 	//printf("\n\na = %d", a);
 }

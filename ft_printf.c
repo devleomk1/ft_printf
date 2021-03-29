@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/29 20:38:21 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 01:12:40 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /* 구조체 초기화 함수 */
 void	init_struct(t_info info)
 {
-	info.minus = FALSE;
-	info.zero = FALSE;
+	info.minus = DISABLE;
+	info.zero = DISABLE;
 	info.width = 0;
 	info.precision = 0; //-1?
 	info.num_base = 10;
@@ -44,12 +44,12 @@ void	ft_parse_flag(const char **format, t_info *info)
 {
 	if (**format == '-')
 	{
-		info->minus = TRUE;
+		info->minus = ENABLE;
 		(*format)++;
 	}
 	if (**format == '0')
 	{
-		info->zero = TRUE;
+		info->zero = ENABLE;
 		(*format)++;
 	}
 }
@@ -96,7 +96,6 @@ int	ft_parse_symbols(const char *format, va_list ap)
 	long long		num;
 	char			*str;		//출력 할 문자열
 	char			*temp;
-	int				i;
 
 	printed = 0;
 	/*---------- info ------------*/
@@ -132,26 +131,33 @@ int	ft_parse_symbols(const char *format, va_list ap)
 				*str++ = (unsigned char)va_arg(ap, int);
 				while (--(info->width) > 0)
 					*str++ = ' ';
+				printed += write(1, temp, str - temp);
 				format++;
-				*str = '\0';
-				printed += write(1, temp, ft_strlen(temp));
 			}
+
+			/*
 			if (*format == 's')
 			{
+				int len = 0;
+				const char *s;
+
+				s = va_arg(ap, char *);
+				//len = ft_strlen()
+				//길이와 비교해서 width와 precision을 출력 해야함
+
 				if (info->minus != TRUE)
 					while(--(info->width) > 0)
-						write(1, ' ', 1);
-				/* string out here */
-				while (/* condition */)
-				{
-					/* code */
-				}
+						write(1, " ", 1);
+				// string out here
+				*str++ = va_arg(ap, char *);
+				if (*str == NULL)
+					*str = "(null)";
+				len = ft_strlen(*str);
+				printed += write(1, temp, len);
 				while (--(info->width) > 0)
-					write(1, ' ', 1);
+					write(1, " ", 1);
 				format++;
-				*str = '\0';
-				printed += write(1, temp, ft_strlen(temp));
-			}
+			}*/
 
 			else if(*format == 'd' || *format == 'i')
 			{
@@ -165,6 +171,7 @@ int	ft_parse_symbols(const char *format, va_list ap)
 				}
 				format++;
 				/*---------- prototype cal : num에서 전부 동일하게 연산------------*/
+				int	i;
 				i = 0;
 				char tmp_num[21];
 				if (num == 0)
@@ -180,19 +187,23 @@ int	ft_parse_symbols(const char *format, va_list ap)
 				if (i > info->precision)
 					info->precision = i;
 				info->width -= info->precision;
-				if (info->minus == FALSE)	//이거 조건 어떻게 줘야하지? 이게 minus falg on 이면 동작하지 말아야지
+				if (info->minus == DISABLE && info->zero == DISABLE)
 					while ((info->width)-- > 0)
 						*str++ = ' ';
+				/* -- number sign -- *//
 				if (info->num_sign == -1)
 					*str++ = '-';
+				if (info->zero == ENABLE)
+					while ((info->width)-- > 0)
+						*str++ = '0';
 				while (i < (info->precision)--)
 					*str++ = '0';
 				while (i-- > 0)
 					*str++ = tmp_num[i];
-				while (info->width > 0)
+				while ((info->width)-- > 0)
 					*str++ = ' ';
-				*str = '\0';
-				printed += write(1, temp, ft_strlen(temp));
+				//*str = '\0';
+				printed += write(1, temp, str - temp);
 			}
 		}
 	}
