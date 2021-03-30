@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/26 21:28:16 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 17:53:05 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ typedef struct	s_info
 	int			precision;
 	int			num_base;
 	int			num_sign;
-	char		type;
+	int			dot_only;
 }				t_info;
 
 int	ft_printf(const char *format, ...);
 int	parse_symbols(const char *format, va_list ap);
 
-/* printf_char */
-int	check_char(char *format, va_list ap, t_info *info, char *str);
+/* print_char */
+int	ft_print_char(t_info *info, va_list ap);
 
 #endif

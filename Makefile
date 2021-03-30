@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 15:47:13 by jisokang          #+#    #+#              #
-#    Updated: 2021/03/29 19:59:14 by jisokang         ###   ########.fr        #
+#    Updated: 2021/03/30 17:49:43 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ AR		= ar rcs
 RM		= rm -f
 
 SRCS	= ft_printf.c \
+			ft_print_char.c \
 
 BSRCS	=
 

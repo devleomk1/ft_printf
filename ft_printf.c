@@ -6,21 +6,23 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 01:14:44 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 17:57:03 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /* 구조체 초기화 함수 */
-void	init_struct(t_info info)
+void	init_struct(t_info *info)
 {
-	info.minus = DISABLE;
-	info.zero = DISABLE;
-	info.width = 0;
-	info.precision = 0; //-1?
-	info.num_base = 10;
-	info.num_sign = 0;
+	info->minus = DISABLE;
+	info->zero = DISABLE;
+	info->dot_only = DISABLE;
+	info->width = -1;
+	info->precision = -1;
+	info->num_base = 10;
+	info->num_sign = 0;
+
 }
 
 /* atoi */
@@ -66,7 +68,7 @@ void	ft_parse_width(const char **format, t_info *info, va_list ap)
 		if (info->width < 0)
 		{
 			info->width = -(info->width);	// *로 width값이 음수값으로 들어오면
-			info->minus = TRUE;				//'-' flag TRUE
+			info->minus = ENABLE;			//'-' flag TRUE
 		}
 	}
 }
@@ -83,8 +85,10 @@ void	ft_parse_precision(const char **format, t_info *info, va_list ap)
 			(*format)++;
 			info->precision = va_arg(ap, int);
 		}
+		else
+			info->dot_only = ENABLE;
 		if (info->precision < 0)
-			info->precision = 0;
+			info->precision = -1;
 	}
 }
 
@@ -98,15 +102,13 @@ int	ft_parse_symbols(const char *format, va_list ap)
 	char			*temp;
 
 	printed = 0;
-	/*---------- info ------------*/
 	info = malloc(sizeof(t_info) * 1);
 	if(!info)
 		return (ERROR);
-
 	while(*format != 0)
 	{
 		/* 이 칭구들을 각각 type별로 넣어주면 더 줄일 수 있어. */
-		init_struct(*info);
+		init_struct(info);
 		str = (char [21]){};	//출력할 문자열의 MAX 길이는 20 + '\0'
 		temp = str;
 		if (*format != '%')
@@ -123,42 +125,34 @@ int	ft_parse_symbols(const char *format, va_list ap)
 			ft_parse_width(&format, info, ap);
 			ft_parse_precision(&format, info, ap);
 
+			/* get %c */
 			if (*format == 'c')
-			{
-				if (info->minus != TRUE)
-					while(--(info->width) > 0)
-						*str++ = ' ';
-				*str++ = (unsigned char)va_arg(ap, int);
-				while (--(info->width) > 0)
-					*str++ = ' ';
-				printed += write(1, temp, str - temp);
-				format++;
-			}
+				printed += ft_print_char(info, ap);
 
-			/*
-			if (*format == 's')
+			/* get %% */
+			else if (*format == '%')
+				printed += write(1, "%", 1);
+
+			else if (*format == 's')
 			{
 				int len = 0;
 				const char *s;
 
 				s = va_arg(ap, char *);
-				//len = ft_strlen()
-				//길이와 비교해서 width와 precision을 출력 해야함
-
-				if (info->minus != TRUE)
-					while(--(info->width) > 0)
-						write(1, " ", 1);
-				// string out here
-				*str++ = va_arg(ap, char *);
-				if (*str == NULL)
-					*str = "(null)";
-				len = ft_strlen(*str);
-				printed += write(1, temp, len);
-				while (--(info->width) > 0)
-					write(1, " ", 1);
-				format++;
-			}*/
-
+				if (s == NULL)
+					s = "(null)";
+				len = ft_strlen(s);
+				if (info->precision < len && info->precision > 0)
+					len = info->precision;
+				else if (info->precision == 0 || info->dot_only == ENABLE)
+					len = 0;
+				if (info->minus == DISABLE)
+					while (len < (info->width)--)
+						printed += write(1, " ", 1);
+				printed += write(1, s, len);
+				while (len < (info->width)--)
+					printed += write(1, " ", 1);
+			}
 			else if(*format == 'd' || *format == 'i')
 			{
 				info->num_base = 10;
@@ -169,7 +163,6 @@ int	ft_parse_symbols(const char *format, va_list ap)
 					num = -num;
 					(info->width)--;
 				}
-				format++;
 				/*---------- prototype cal : num에서 전부 동일하게 연산------------*/
 				int	i;
 				i = 0;
@@ -202,9 +195,9 @@ int	ft_parse_symbols(const char *format, va_list ap)
 					*str++ = tmp_num[i];
 				while ((info->width)-- > 0)
 					*str++ = ' ';
-				//*str = '\0';
 				printed += write(1, temp, str - temp);
 			}
+			format++;
 		}
 	}
 	free(info);
