@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:42:42 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 18:10:55 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 18:35:05 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	ft_print_char(t_info *info, va_list ap)
 {
 	int		printed;
+	char	array[21];
 	char	*str;
 	char	*temp;
 
-	str = (char [21]){};
+	ft_bzero(array, 21);
+	str = array;
 	temp = str;
 	if (info->minus == DISABLE)
 	{
