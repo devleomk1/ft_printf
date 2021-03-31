@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 17:57:03 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 20:32:27 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,31 +128,11 @@ int	ft_parse_symbols(const char *format, va_list ap)
 			/* get %c */
 			if (*format == 'c')
 				printed += ft_print_char(info, ap);
-
 			/* get %% */
 			else if (*format == '%')
 				printed += write(1, "%", 1);
-
 			else if (*format == 's')
-			{
-				int len = 0;
-				const char *s;
-
-				s = va_arg(ap, char *);
-				if (s == NULL)
-					s = "(null)";
-				len = ft_strlen(s);
-				if (info->precision < len && info->precision > 0)
-					len = info->precision;
-				else if (info->precision == 0 || info->dot_only == ENABLE)
-					len = 0;
-				if (info->minus == DISABLE)
-					while (len < (info->width)--)
-						printed += write(1, " ", 1);
-				printed += write(1, s, len);
-				while (len < (info->width)--)
-					printed += write(1, " ", 1);
-			}
+				printed += ft_print_string(info, ap);
 			else if(*format == 'd' || *format == 'i')
 			{
 				info->num_base = 10;
@@ -188,7 +168,9 @@ int	ft_parse_symbols(const char *format, va_list ap)
 					*str++ = '-';
 				if (info->zero == ENABLE)
 					while ((info->width)-- > 0)
+						//HERE
 						*str++ = '0';
+						//여기 고쳐
 				while (i < (info->precision)--)
 					*str++ = '0';
 				while (i-- > 0)

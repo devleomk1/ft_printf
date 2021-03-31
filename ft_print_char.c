@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:42:42 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 18:35:05 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/30 20:18:49 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_print_char(t_info *info, va_list ap)
 {
-	int		printed;
 	char	array[21];
 	char	*str;
 	char	*temp;
@@ -30,6 +29,5 @@ int	ft_print_char(t_info *info, va_list ap)
 	*str++ = (unsigned char)va_arg(ap, int);
 	while (--(info->width) > 0)
 		*str++ = ' ';
-	printed = write(1, temp, str - temp);
-	return (printed);
+	return (write(1, temp, str - temp));
 }
