@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 21:02:54 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/31 14:23:59 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int	parse_symbols(const char *format, va_list ap);
 /* print_char */
 int	ft_print_char(t_info *info, va_list ap);
 int	ft_print_string(t_info *info, va_list ap);
+int	ft_print_num(t_info *info, va_list ap);
 
 #endif

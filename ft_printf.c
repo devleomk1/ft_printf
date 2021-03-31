@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 20:32:27 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/31 20:48:04 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	ft_parse_flag(const char **format, t_info *info)
 /* atoi get width */
 void	ft_parse_width(const char **format, t_info *info, va_list ap)
 {
-
 	if (ft_isdigit(**format) == TRUE)
 		info->width = skip_atoi(format);
 	else if (**format == '*')
@@ -144,43 +143,62 @@ int	ft_parse_symbols(const char *format, va_list ap)
 					(info->width)--;
 				}
 				/*---------- prototype cal : num에서 전부 동일하게 연산------------*/
-				int	i;
-				i = 0;
+				int	len;
+				len = 0;
 				char tmp_num[21];
+				//char c;
 				if (num == 0)
-					tmp_num[i++] = '0';
+					tmp_num[len++] = '0';
 				else
 				{
 					while (num != 0)
 					{
-						tmp_num[i++] = DIGITS[num % info->num_base];
+						tmp_num[len++] = DIGITS[num % info->num_base];
 						num = num / info->num_base;
 					}
 				}
-				if (i > info->precision)
-					info->precision = i;
+
+				if (info->precision < len)
+					info->precision = len;
 				info->width -= info->precision;
+
 				if (info->minus == DISABLE && info->zero == DISABLE)
 					while ((info->width)-- > 0)
 						*str++ = ' ';
 				/* -- number sign -- */
 				if (info->num_sign == -1)
 					*str++ = '-';
-				if (info->zero == ENABLE)
-					while ((info->width)-- > 0)
-						//HERE
-						*str++ = '0';
-						//여기 고쳐
-				while (i < (info->precision)--)
+				/*-------- 수정 HERE! --------- */
+				/*
+				if (info->zero == DISABLE)
+						while ((info->width)-- > 0)
+							*str++ = '0';
+							*/
+				//width = 3
+				//preci = 5
+				//len   = 2
+
+				if (info->minus == DISABLE && info->zero == ENABLE)
+				{
+					if ((info->width) > (info->precision))
+						while ((info->width)-- > 0)
+							*str++ = ' ';
+					else if ((info->width) < (info->precision))
+						while ((info->width)-- > 0)
+							*str++ = '0';
+				}
+				while (len < (info->precision)--)
 					*str++ = '0';
-				while (i-- > 0)
-					*str++ = tmp_num[i];
-				while ((info->width)-- > 0)
+				/*-------- NUM 출력 --------*/
+				while (len-- > 0)
+					*str++ = tmp_num[len];
+				while ((info->width)-- > 0)		//minus 일때 뒤쪽 width 남은거 출력
 					*str++ = ' ';
 				printed += write(1, temp, str - temp);
 			}
 			format++;
 		}
+
 	}
 	free(info);
 	return (printed);

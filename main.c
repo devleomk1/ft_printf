@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:43:44 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/30 17:17:40 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/03/31 20:57:17 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,16 @@
 int	main(void)
 {
 	int a = 0;
-	//printf("%-7d", 33);
-	//printf("hello, %.s", "gavin");
-	printf("%.*s", -1, 0);
-	printf("\n-----\n");
-	ft_printf("%.*s", -1, 0);
-	//a = ft_printf("%%%%");
-	//printf("\n\na = %d", a);
+	int pre = 0;
+	int wid = 0;
+
+	printf("|%08.5d|\n", 34);	//|   00034|
+	printf("|%05.8d|\n", 34);	//|00000034|
+	printf("|%05.5d|\n", 34);	//|00034|
+
+	printf("|%8.5d|\n", 34);	//|   00034|
+	printf("|%5.8d|\n", 34);	//|00000034|
+	printf("|%5.5d|\n", 34);	//|00034|
+
+	printf("|%5.1d|\n", 34);	//|00034|
 }
