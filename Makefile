@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 15:47:13 by jisokang          #+#    #+#              #
-#    Updated: 2021/04/02 14:57:21 by jisokang         ###   ########.fr        #
+#    Updated: 2021/04/03 00:51:06 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ RM		= rm -f
 SRCS	= ft_printf.c \
 			ft_print_char.c \
 			ft_print_string.c \
-			ft_print_num.c \
-			main.c
+			ft_print_num.c
 BSRCS	=
 
 OBJS	= $(SRCS:.c=.o)
@@ -37,8 +36,7 @@ $(NAME) : $(OBJS)
 	cp $(LIBFTDIR)/$(LIBFTFILE) $(NAME)
 	$(AR) $@ $^
 
-bonus : $(BOBJS)
-	$(AR) $(NAME) $^
+bonus :
 
 all : $(NAME)
 
