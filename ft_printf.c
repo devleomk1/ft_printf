@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/02 15:03:12 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/02 18:56:28 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,26 @@ void	init_struct(t_info *info)
 	info->minus = DISABLE;
 	info->zero = DISABLE;
 	info->dot_only = DISABLE;
+	info->locass = DISABLE;
+	info->special = DISABLE;
 	info->width = -1;
 	info->precision = -1;
 	info->num_base = 10;
 	info->num_sign = 0;
 	info->gap = 0;
-	info->locass = DISABLE;
-
 }
+
 int	get_max(int a, int b)
 {
-	if(a > b)
+	if (a > b)
 		return (a);
 	else
 		return (b);
 }
+
 int	get_min(int a, int b)
 {
-	if(a > b)
+	if (a > b)
 		return (b);
 	else
 		return (a);
@@ -49,7 +51,7 @@ static int skip_atoi(const char **s)
 	i = 0;
 	while (ft_isdigit(**s))
 		i = i * 10 + *((*s)++) - '0';
-	return i;
+	return (i);
 }
 
 /* get flag */
@@ -105,6 +107,21 @@ void	ft_parse_precision(const char **format, t_info *info, va_list ap)
 			info->precision = -1;
 	}
 }
+int	ft_parse_type(t_info *info, va_list ap, const char type)
+{
+	int	printed;
+
+	printed = 0;
+	if (type == 'c')
+		printed += ft_print_char(info, ap);
+	else if (type == '%')
+		printed += ft_print_percent(info);
+	else if (type == 's')
+		printed += ft_print_string(info, ap);
+	else if (ft_strchr("diupxX", type))
+		printed += ft_print_num(info, ap, type);
+	return (printed);
+}
 
 /* 분석하는 함수 */
 int	ft_parse_symbols(const char *format, va_list ap)
@@ -113,37 +130,22 @@ int	ft_parse_symbols(const char *format, va_list ap)
 	int				printed;
 
 	printed = 0;
-	info = malloc(sizeof(t_info) * 1);
-	if(!info)
+	if (!(info = malloc(sizeof(t_info) * 1)))
 		return (ERROR);
-	while(*format != 0)
+	while (*format != 0)
 	{
 		init_struct(info);
-		if (*format != '%')
-		{
-			printed += write(1, format, 1);
-			format++;
-		}
 		if (*format == '%')
 		{
 			format++;
-			/* get FLAG */
-			ft_parse_flag(&format, info);
-			/* get width & precision */
-			ft_parse_width(&format, info, ap);
+			ft_parse_flag(&format, info);			/* get FLAG */
+			ft_parse_width(&format, info, ap);		/* get width & precision */
 			ft_parse_precision(&format, info, ap);
-
-			if (*format == 'c')
-				printed += ft_print_char(info, ap);
-			else if (*format == '%')
-				printed += write(1, "%", 1);
-			else if (*format == 's')
-				printed += ft_print_string(info, ap);
-			else if (ft_strchr("diuxX", *format))
-				printed += ft_print_num(info, ap, *format);
-
-			format++;
+			printed += ft_parse_type(info, ap, *format);
 		}
+		else
+			printed += write(1, format, 1);
+		format++;
 	}
 	free(info);
 	return (printed);

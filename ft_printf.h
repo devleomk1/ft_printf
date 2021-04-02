@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/02 15:04:57 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/02 18:50:31 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_info
 	int			dot_only;
 	int			locass;
 	int			gap;
+	int			special;
 }				t_info;
 
 int	ft_printf(const char *format, ...);
@@ -51,8 +52,9 @@ int	parse_symbols(const char *format, va_list ap);
 
 /* print_type */
 int	ft_print_char(t_info *info, va_list ap);
+int	ft_print_percent(t_info *info);
 int	ft_print_string(t_info *info, va_list ap);
-int	ft_print_num(t_info *info, va_list ap, char type);
+int	ft_print_num(t_info *info, va_list ap, const char type);
 int	print_num(t_info *info, long long num);
 
 /* util */

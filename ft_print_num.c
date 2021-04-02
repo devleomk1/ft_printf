@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 14:24:19 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/02 14:59:58 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/02 18:39:04 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,15 @@ int	print_di(t_info *info, va_list ap)
 	return (printed);
 }
 
-int	print_u(void)
+int	print_u(t_info *info, va_list ap)
 {
-	return (0);
+	int			printed;
+	long long	num;
+
+	info->num_base = 10;
+	num = va_arg(ap, unsigned int);
+	printed = print_num(info, num);
+	return (printed);
 }
 
 int	print_xX(t_info *info, va_list ap, char type)
@@ -46,6 +52,19 @@ int	print_xX(t_info *info, va_list ap, char type)
 	printed = print_num(info, num);
 	return (printed);
 }
+int	print_p(t_info *info, va_list ap)
+{
+	int			printed;
+	long long	num;
+	info->special = ENABLE;
+	info->locass = SMALL;
+	info->width -= 2;
+	info->num_base = 16;
+	num = (unsigned long)va_arg(ap, void *);
+
+	printed = print_num(info, num);
+	return (printed);
+}
 
 int	print_num(t_info *info, long long num)
 {
@@ -55,7 +74,7 @@ int	print_num(t_info *info, long long num)
 	int			len;
 	int			tmp_pre;
 
-	str = (char [21]){};
+	str = (char [121]){};
 	temp = str;
 	len = 0;
 	tmp_pre = info->precision;
@@ -83,6 +102,11 @@ int	print_num(t_info *info, long long num)
 	/* -- number sign -- */
 	if (info->num_sign == -1)
 		*str++ = '-';
+	if (info->special == ENABLE)
+	{
+		*str++ = '0';
+		*str++ = 'x';
+	}
 	if (info->zero == ENABLE)
 		while (info->gap-- > 0)
 			*str++ = '0';
@@ -97,7 +121,7 @@ int	print_num(t_info *info, long long num)
 	return (write(1, temp, str - temp));
 }
 
-int	ft_print_num(t_info *info, va_list ap, char type)
+int	ft_print_num(t_info *info, va_list ap, const char type)
 {
 	int			printed;
 
@@ -105,9 +129,11 @@ int	ft_print_num(t_info *info, va_list ap, char type)
 	if (type == 'd' || type == 'i')
 		printed = print_di(info, ap);
 	else if (type == 'u')
-		printed = print_u();
+		printed = print_u(info, ap);
 	else if (type == 'x' || type == 'X')
 		printed = print_xX(info, ap, type);
+	else if (type == 'p')
+		printed = print_p(info, ap);
 	else
 		printed = 0;
 	return (printed);
