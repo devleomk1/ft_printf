@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/01 21:37:47 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/02 15:04:57 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # define SMALL 32
 
 # define DIGITS "0123456789ABCDEF"
-# define max(a, b) (((a) < (b)) ? (b) : (a))
-# define min(a, b) (((a) > (b)) ? (b) : (a))
 
 /*
 소문자 바꾸기는 ascii 값 차이 +40을 해주면 된다. 아님 ft_tolower쓰던가
@@ -44,15 +42,20 @@ typedef struct	s_info
 	int			num_base;
 	int			num_sign;
 	int			dot_only;
+	int			locass;
 	int			gap;
 }				t_info;
 
 int	ft_printf(const char *format, ...);
 int	parse_symbols(const char *format, va_list ap);
 
-/* print_char */
+/* print_type */
 int	ft_print_char(t_info *info, va_list ap);
 int	ft_print_string(t_info *info, va_list ap);
-int	ft_print_num(t_info *info, va_list ap);
+int	ft_print_num(t_info *info, va_list ap, char type);
+int	print_num(t_info *info, long long num);
 
+/* util */
+int	get_max(int a, int b);
+int	get_min(int a, int b);
 #endif
