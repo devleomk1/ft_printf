@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/31 14:23:59 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/01 21:37:47 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@
 
 # define ENABLE 1
 # define DISABLE 0
+# define SMALL 32
 
 # define DIGITS "0123456789ABCDEF"
+# define max(a, b) (((a) < (b)) ? (b) : (a))
+# define min(a, b) (((a) > (b)) ? (b) : (a))
 
 /*
 소문자 바꾸기는 ascii 값 차이 +40을 해주면 된다. 아님 ft_tolower쓰던가
@@ -41,6 +44,7 @@ typedef struct	s_info
 	int			num_base;
 	int			num_sign;
 	int			dot_only;
+	int			gap;
 }				t_info;
 
 int	ft_printf(const char *format, ...);

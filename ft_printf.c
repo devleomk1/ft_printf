@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/31 20:48:04 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/01 21:37:55 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_struct(t_info *info)
 	info->precision = -1;
 	info->num_base = 10;
 	info->num_sign = 0;
+	info->gap = 0;
 
 }
 
@@ -36,22 +37,18 @@ static int skip_atoi(const char **s)
 	return i;
 }
 
-// 이거 c파일로 Libft에 빼야됨
-int	ft_putstr_len(char *format, int len)
-{
-	write(1, format, len);
-	return (len);
-}
 void	ft_parse_flag(const char **format, t_info *info)
 {
-	if (**format == '-')
+	while (**format == '-' || **format == '0')
 	{
-		info->minus = ENABLE;
-		(*format)++;
-	}
-	if (**format == '0')
-	{
-		info->zero = ENABLE;
+		if (**format == '0')
+			info->zero = ENABLE;
+		else
+		{
+			if (info->zero == ENABLE)	//MINUS와 ZERO를 같이 쓰면
+				info->zero = DISABLE;	//ZERO가 무시된다.
+			info->minus = ENABLE;
+		}
 		(*format)++;
 	}
 }
@@ -68,6 +65,8 @@ void	ft_parse_width(const char **format, t_info *info, va_list ap)
 		{
 			info->width = -(info->width);	// *로 width값이 음수값으로 들어오면
 			info->minus = ENABLE;			//'-' flag TRUE
+			if(info->zero == ENABLE)
+				info->zero = DISABLE;
 		}
 	}
 }
@@ -132,6 +131,54 @@ int	ft_parse_symbols(const char *format, va_list ap)
 				printed += write(1, "%", 1);
 			else if (*format == 's')
 				printed += ft_print_string(info, ap);
+			else if(*format == 'x' || *format == 'X')
+			{
+				info->num_base = 16;
+				num = va_arg(ap, unsigned int);
+					/*---------- prototype cal : num에서 전부 동일하게 연산------------*/
+				int	len = 0;
+				char tmp_num[21];
+				int tmp_pre = info->precision;
+				int locass = DISABLE;
+
+				if (*format == 'x')
+					locass = SMALL;
+				if (num == 0)
+					tmp_num[len++] = '0';
+				else
+					while (num != 0)
+					{
+						tmp_num[len++] = (DIGITS[num % info->num_base]) | locass;
+						num = num / info->num_base;
+					}
+				if (tmp_num[0] == '0' && (info->precision == 0 || info->dot_only == ENABLE))
+					len = 0;
+				if (len > info->precision)
+					info->precision = len;
+				info->gap = info->width - info->precision;
+				if (info->minus == DISABLE && info->width > max(tmp_pre, len))
+				{
+					if(info->zero == ENABLE && tmp_pre < 0){}
+					else
+						while (info->gap-- > 0)
+							*str++ = ' ';
+				}
+				/* -- number sign -- */
+				if (info->num_sign == -1)
+					*str++ = '-';
+				if (info->zero == ENABLE)
+					while (info->gap-- > 0)
+						*str++ = '0';
+				info->precision -= len;
+				while ((info->precision)--)
+						*str++ = '0';
+				/*-------- NUM 출력 --------*/
+				while (len-- > 0)
+					*str++ = tmp_num[len];
+				while ((info->gap)-- > 0)		//minus 일때 뒤쪽 width 남은거 출력
+					*str++ = ' ';
+				printed += write(1, temp, str - temp);
+			}
 			else if(*format == 'd' || *format == 'i')
 			{
 				info->num_base = 10;
@@ -143,56 +190,43 @@ int	ft_parse_symbols(const char *format, va_list ap)
 					(info->width)--;
 				}
 				/*---------- prototype cal : num에서 전부 동일하게 연산------------*/
-				int	len;
-				len = 0;
+				int	len = 0;
 				char tmp_num[21];
-				//char c;
+				int tmp_pre = info->precision;
+
 				if (num == 0)
 					tmp_num[len++] = '0';
 				else
-				{
 					while (num != 0)
 					{
 						tmp_num[len++] = DIGITS[num % info->num_base];
 						num = num / info->num_base;
 					}
-				}
-
-				if (info->precision < len)
+				if (tmp_num[0] == '0' && (info->precision == 0 || info->dot_only == ENABLE))
+					len = 0;
+				if (len > info->precision)
 					info->precision = len;
-				info->width -= info->precision;
-
-				if (info->minus == DISABLE && info->zero == DISABLE)
-					while ((info->width)-- > 0)
-						*str++ = ' ';
+				info->gap = info->width - info->precision;
+				if (info->minus == DISABLE && info->width > max(tmp_pre, len))
+				{
+					if(info->zero == ENABLE && tmp_pre < 0){}
+					else
+						while (info->gap-- > 0)
+							*str++ = ' ';
+				}
 				/* -- number sign -- */
 				if (info->num_sign == -1)
 					*str++ = '-';
-				/*-------- 수정 HERE! --------- */
-				/*
-				if (info->zero == DISABLE)
-						while ((info->width)-- > 0)
-							*str++ = '0';
-							*/
-				//width = 3
-				//preci = 5
-				//len   = 2
-
-				if (info->minus == DISABLE && info->zero == ENABLE)
-				{
-					if ((info->width) > (info->precision))
-						while ((info->width)-- > 0)
-							*str++ = ' ';
-					else if ((info->width) < (info->precision))
-						while ((info->width)-- > 0)
-							*str++ = '0';
-				}
-				while (len < (info->precision)--)
-					*str++ = '0';
+				if (info->zero == ENABLE)
+					while (info->gap-- > 0)
+						*str++ = '0';
+				info->precision -= len;
+				while ((info->precision)--)
+						*str++ = '0';
 				/*-------- NUM 출력 --------*/
 				while (len-- > 0)
 					*str++ = tmp_num[len];
-				while ((info->width)-- > 0)		//minus 일때 뒤쪽 width 남은거 출력
+				while ((info->gap)-- > 0)		//minus 일때 뒤쪽 width 남은거 출력
 					*str++ = ' ';
 				printed += write(1, temp, str - temp);
 			}

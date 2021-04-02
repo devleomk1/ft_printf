@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 15:47:13 by jisokang          #+#    #+#              #
-#    Updated: 2021/03/30 21:03:26 by jisokang         ###   ########.fr        #
+#    Updated: 2021/04/01 19:22:02 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM		= rm -f
 SRCS	= ft_printf.c \
 			ft_print_char.c \
 			ft_print_string.c \
-
+			main.c
 BSRCS	=
 
 OBJS	= $(SRCS:.c=.o)
