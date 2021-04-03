@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 14:24:19 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/03 00:50:03 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:04:21 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	print_num(t_info *info, long long num)
 	int			tmp_pre;
 	long long	ycha_num =0;
 
-	str = (char [121]){};
+	str = (char[1024]){};
 	temp = str;
 	len = 0;
 	tmp_pre = info->precision;
@@ -94,12 +94,11 @@ int	print_num(t_info *info, long long num)
 	if (len > info->precision)
 		info->precision = len;
 	info->gap = info->width - info->precision;
-	if (info->minus == DISABLE && info->width > get_max(tmp_pre, len))
-	{
-		if(!(info->zero == ENABLE && tmp_pre < 0))
+	temp = str;
+	if (info->minus == DISABLE && info->gap > 0)
+		if(!(info->zero == ENABLE && tmp_pre < 0) || info->dot_only == ENABLE)
 			while (info->gap-- > 0)
 				*str++ = ' ';
-	}
 	/* number sign -------------------------------------------------------------------------*/
 	if (info->num_sign == -1)
 		*str++ = '-';
