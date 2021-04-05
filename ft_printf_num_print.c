@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 17:11:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/05 18:06:40 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 18:15:21 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	print_num(t_info *info, long long num)
 	if (tmp_num == 0 && (info->precision == 0 || info->dot_only == ENABLE))
 		len = 0;
 	gap = info->width - get_max(info->precision, len);
-	if ((info->minus == DISABLE && gap > 0 && (!(info->zero == ENABLE &&
-		info->precision < 0)) || info->dot_only == ENABLE))
+	if ((info->minus == DISABLE && gap > 0) && (!(info->zero == ENABLE &&
+	info->precision < 0) || info->dot_only == ENABLE))
 		printed += ft_putchar_len(' ', &gap);
 	info->precision = get_max(info->precision, len);
 	printed += print_sign(info);
