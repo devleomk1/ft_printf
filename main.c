@@ -6,17 +6,14 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 16:43:44 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/02 22:08:09 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 16:06:39 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/* 테스트용 main 함수 */
 int	main(void)
 {
-	printf("%*.*d\n", 4, 0, 8000000);
-	ft_printf("%*.*d\n", 4, 0, 8000000);
-	//ft_printf("%.*d", -1, 0);
-	//printf("%10.5d", 123);	//|00043|
+	printf("[%5.3Q] [%5.3d]\n", 42);
+	ft_printf("[%5.3Q] [%5.3d]\n", 42);
 }

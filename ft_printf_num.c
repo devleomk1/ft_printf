@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_num.c                                     :+:      :+:    :+:   */
+/*   ft_printf_num.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 14:24:19 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/03 17:32:23 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 16:09:22 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	print_u(t_info *info, va_list ap)
 	return (printed);
 }
 
-int	print_xX(t_info *info, va_list ap, char type)
+int	print_xx(t_info *info, va_list ap, char type)
 {
 	int			printed;
 	long long	num;
@@ -77,7 +77,7 @@ int	ft_print_num(t_info *info, va_list ap, const char type)
 	else if (type == 'u')
 		printed = print_u(info, ap);
 	else if (type == 'x' || type == 'X')
-		printed = print_xX(info, ap, type);
+		printed = print_xx(info, ap, type);
 	else if (type == 'p')
 		printed = print_p(info, ap);
 	return (printed);

@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/03 17:28:25 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:28:30 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 # define DIGITS "0123456789ABCDEF"
 
-typedef struct s_info
+typedef struct	s_info
 {
 	int			minus;
 	int			zero;
@@ -39,37 +39,41 @@ typedef struct s_info
 	int			locass;
 	int			num_base;
 	int			num_sign;
-	int			gap;
 	int			address;
 }				t_info;
 
 /*
-ft_printf.c
+*****************************   MAIN FUNCTION   *******************************
 */
-void	init_struct(t_info *info);
-int	ft_printf(const char *format, ...);
-int	ft_parse_symbols(const char *format, va_list ap);
+void			init_struct(t_info *info);
+int				ft_parse_symbols(const char *format, va_list ap);
+int				ft_printf(const char *format, ...);
 
 /*
-for parse
+*****************************   PARSE FUNCTION   ******************************
 */
-void	ft_parse_flag(const char **format, t_info *info);
-void	ft_parse_width(const char **format, t_info *info, va_list ap);
-void	ft_parse_precision(const char **format, t_info *info, va_list ap);
-int	ft_parse_type(t_info *info, va_list ap, const char type);
+int				skip_atoi(const char **s);
+void			ft_parse_flag(const char **format, t_info *info);
+void			ft_parse_width(const char **format, t_info *info, va_list ap);
+void			ft_parse_precision(const char **format,
+									t_info *info, va_list ap);
+int				ft_parse_type(t_info *info, va_list ap, const char type);
 
 /*
-print_type
+*****************************   PRINT FUNCTION   *******************************
 */
-int	ft_print_char(t_info *info, va_list ap);
-int	ft_print_percent(t_info *info);
-int	ft_print_string(t_info *info, va_list ap);
-int	ft_print_num(t_info *info, va_list ap, const char type);
-
-/*
-for num function
-*/
-
-int	print_num(t_info *info, long long num);
+int				ft_print_char(t_info *info, va_list ap);
+int				ft_print_percent(t_info *info);
+int				ft_print_string(t_info *info, va_list ap);
+int				print_di(t_info *info, va_list ap);
+int				print_u(t_info *info, va_list ap);
+int				print_xx(t_info *info, va_list ap, char type);
+int				print_p(t_info *info, va_list ap);
+int				ft_print_num(t_info *info, va_list ap, const char type);
+int				get_max(int a, int b);
+int				ft_putchar_len(char c, int *len);
+int				num_itoa(t_info *info, char *num_box, long long num);
+int				print_sign(t_info *info);
+int				print_num(t_info *info, long long num);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/03 16:48:00 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 16:07:05 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ void	init_struct(t_info *info)
 	info->precision = -1;
 	info->num_base = 10;
 	info->num_sign = 0;
-	info->gap = 0;
 }
 
-int	ft_parse_symbols(const char *format, va_list ap)
+int		ft_parse_symbols(const char *format, va_list ap)
 {
 	t_info		*info;
 	int			printed;
@@ -54,7 +53,7 @@ int	ft_parse_symbols(const char *format, va_list ap)
 	return (printed);
 }
 
-int	ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	int		printed;

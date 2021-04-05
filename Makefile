@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 15:47:13 by jisokang          #+#    #+#              #
-#    Updated: 2021/04/03 17:12:39 by jisokang         ###   ########.fr        #
+#    Updated: 2021/04/05 16:10:11 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ RM		= rm -f
 
 SRCS	= ft_printf.c \
 			ft_printf_parse.c \
+			ft_printf_char.c \
+			ft_printf_string.c \
+			ft_printf_num.c \
 			ft_printf_num_print.c \
-			ft_print_char.c \
-			ft_print_num.c \
-			ft_print_string.c \
 
 BSRCS	=
 

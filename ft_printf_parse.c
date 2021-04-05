@@ -6,13 +6,13 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 16:28:38 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/03 16:59:26 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 15:11:01 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	skip_atoi(const char **s)
+int		skip_atoi(const char **s)
 {
 	int	i;
 
@@ -75,7 +75,7 @@ void	ft_parse_precision(const char **format, t_info *info, va_list ap)
 	}
 }
 
-int	ft_parse_type(t_info *info, va_list ap, const char type)
+int		ft_parse_type(t_info *info, va_list ap, const char type)
 {
 	int	printed;
 
@@ -90,5 +90,3 @@ int	ft_parse_type(t_info *info, va_list ap, const char type)
 		printed += ft_print_num(info, ap, type);
 	return (printed);
 }
-
-

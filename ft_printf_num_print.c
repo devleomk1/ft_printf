@@ -6,18 +6,26 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 17:11:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/03 19:11:33 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 16:05:17 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putchar_len(char c, int len)
+int	get_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+int	ft_putchar_len(char c, int *len)
 {
 	int	i;
 
 	i = 0;
-	while (len-- > 0)
+	while ((*len)-- > 0)
 	{
 		i = i + write(1, &c, 1);
 	}
@@ -57,37 +65,28 @@ int	print_sign(t_info *info)
 int	print_num(t_info *info, long long num)
 {
 	int			len;
-	int			tmp_pre;
+	int			gap;
 	int			printed;
 	long long	tmp_num;
 	char		num_box[21];
 
 	printed = 0;
-	tmp_pre = info->precision;
 	tmp_num = num;
 	len = num_itoa(info, num_box, num);
 	if (tmp_num == 0 && (info->precision == 0 || info->dot_only == ENABLE))
 		len = 0;
-	if (len > info->precision)
-		info->precision = len;
-	info->gap = info->width - info->precision;
-	if (info->minus == DISABLE && info->gap > 0)
-		if (!(info->zero == ENABLE && tmp_pre < 0) || info->dot_only == ENABLE)
-			while (info->gap-- > 0)
-				printed += write(1, " ", 1);
-			//printed += ft_putchar_len(' ', info->gap);
-	printed = print_sign(info);
+	gap = info->width - get_max(info->precision, len);
+	if ((info->minus == DISABLE && gap > 0 && !(info->zero == ENABLE &&
+		info->precision < 0)) || info->dot_only == ENABLE)
+		printed += ft_putchar_len(' ', &gap);
+	info->precision = get_max(info->precision, len);
+	printed += print_sign(info);
 	if (info->zero == ENABLE)
-		while (info->gap-- > 0)
-			printed += write(1, "0", 1);
+		printed += ft_putchar_len('0', &gap);
 	info->precision -= len;
-	while (info->precision-- > 0)
-		printed += write(1, "0", 1);
-		//printed += ft_putchar_len('0', info->precision);
+	printed += ft_putchar_len('0', &info->precision);
 	while (len-- > 0)
 		printed += write(1, &num_box[len], 1);
-	while (info->gap-- > 0)
-		printed += write(1, " ", 1);
-	//printed += ft_putchar_len(' ', info->gap);
+	printed += ft_putchar_len(' ', &gap);
 	return (printed);
 }
