@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/02 18:50:31 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/03 17:28:25 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,47 @@
 
 # define DIGITS "0123456789ABCDEF"
 
-/*
-소문자 바꾸기는 ascii 값 차이 +40을 해주면 된다. 아님 ft_tolower쓰던가
-*/
-
-typedef struct	s_info
+typedef struct s_info
 {
 	int			minus;
 	int			zero;
 	int			width;
 	int			precision;
-	int			num_base;
-	int			num_sign;
 	int			dot_only;
 	int			locass;
+	int			num_base;
+	int			num_sign;
 	int			gap;
-	int			special;
+	int			address;
 }				t_info;
 
+/*
+ft_printf.c
+*/
+void	init_struct(t_info *info);
 int	ft_printf(const char *format, ...);
-int	parse_symbols(const char *format, va_list ap);
+int	ft_parse_symbols(const char *format, va_list ap);
 
-/* print_type */
+/*
+for parse
+*/
+void	ft_parse_flag(const char **format, t_info *info);
+void	ft_parse_width(const char **format, t_info *info, va_list ap);
+void	ft_parse_precision(const char **format, t_info *info, va_list ap);
+int	ft_parse_type(t_info *info, va_list ap, const char type);
+
+/*
+print_type
+*/
 int	ft_print_char(t_info *info, va_list ap);
 int	ft_print_percent(t_info *info);
 int	ft_print_string(t_info *info, va_list ap);
 int	ft_print_num(t_info *info, va_list ap, const char type);
+
+/*
+for num function
+*/
+
 int	print_num(t_info *info, long long num);
 
-/* util */
-int	get_max(int a, int b);
-int	get_min(int a, int b);
 #endif

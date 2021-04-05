@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:42:42 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/02 18:59:28 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:50:57 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,39 @@
 
 int	ft_print_char(t_info *info, va_list ap)
 {
-	char	array[21];
-	char	*str;
-	char	*temp;
+	int		printed;
+	char	c;
 
-	ft_bzero(array, 21);
-	str = array;
-	temp = str;
+	printed = 0;
 	if (info->minus == DISABLE)
+	{
 		while (--(info->width) > 0)
-			*str++ = ' ';
-	*str++ = (unsigned char)va_arg(ap, int);
+			printed += write(1, " ", 1);
+	}
+	c = (unsigned char)va_arg(ap, int);
+	printed += write(1, &c, 1);
 	while (--(info->width) > 0)
-		*str++ = ' ';
-	return (write(1, temp, str - temp));
+		printed += write(1, " ", 1);
+	return (printed);
 }
 
 int	ft_print_percent(t_info *info)
 {
-	char	array[21];
-	char	*str;
-	char	*temp;
+	int		printed;
 
-	ft_bzero(array, 21);
-	str = array;
-	temp = str;
+	printed = 0;
 	if (info->minus == DISABLE && info->zero == DISABLE)
+	{
 		while (--(info->width) > 0)
-			*str++ = ' ';
+			printed += write(1, " ", 1);
+	}
 	if (info->minus == DISABLE && info->zero == ENABLE)
+	{
 		while (--(info->width) > 0)
-			*str++ = '0';
-	*str++ = '%';
+			printed += write(1, "0", 1);
+	}
+	printed += write(1, "%", 1);
 	while (--(info->width) > 0)
-		*str++ = ' ';
-	return (write(1, temp, str - temp));
+		printed += write(1, " ", 1);
+	return (printed);
 }
-
