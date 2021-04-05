@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 05:14:54 by jisokang          #+#    #+#             */
-/*   Updated: 2021/03/17 16:03:16 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:52:47 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ long int	ft_abs(long int nbr)
 		return (nbr);
 }
 
-int	ft_len(long int nbr)
+int			ft_len(long int nbr)
 {
 	int	len;
 
@@ -36,7 +36,7 @@ int	ft_len(long int nbr)
 	return (len);
 }
 
-char	*ft_itoa(int n)
+char		*ft_itoa(int n)
 {
 	int		len;
 	int		sign;
