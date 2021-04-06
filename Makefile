@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 15:47:13 by jisokang          #+#    #+#              #
-#    Updated: 2021/04/05 16:10:11 by jisokang         ###   ########.fr        #
+#    Updated: 2021/04/05 20:30:12 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ BOBJS	= $(BSRCS:.c=.o)
 $(NAME) : $(OBJS)
 	make -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFTFILE) $(NAME)
-	$(AR) $@ $^
+	$(AR) $@ $?
 
 bonus :
 

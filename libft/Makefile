@@ -6,7 +6,7 @@
 #    By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/23 22:53:42 by jisokang          #+#    #+#              #
-#    Updated: 2021/02/20 19:57:08 by jisokang         ###   ########.fr        #
+#    Updated: 2021/04/05 20:16:45 by jisokang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,10 +67,10 @@ OBJS		=	$(SRCS:.c=.o)
 OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 
 $(NAME): $(OBJS)
-	$(AR) $@ $^
+	$(AR) $@ $?
 
 bonus: $(OBJS_BONUS)
-	$(AR) $(NAME) $^
+	$(AR) $(NAME) $?
 
 all: $(NAME)
 
