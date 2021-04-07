@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 16:28:38 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/05 15:11:01 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/07 18:08:00 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,13 @@ int		ft_parse_type(t_info *info, va_list ap, const char type)
 		printed += ft_print_percent(info);
 	else if (type == 's')
 		printed += ft_print_string(info, ap);
-	else if (ft_strchr("diupxX", type))
-		printed += ft_print_num(info, ap, type);
+	else if (type == 'd' || type == 'i')
+		printed = print_di(info, ap);
+	else if (type == 'u')
+		printed = print_u(info, ap);
+	else if (type == 'x' || type == 'X')
+		printed = print_xx(info, ap, type);
+	else if (type == 'p')
+		printed = print_p(info, ap);
 	return (printed);
 }

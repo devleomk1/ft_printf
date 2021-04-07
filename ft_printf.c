@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 16:37:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/05 16:07:05 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/07 17:25:55 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,29 @@ void	init_struct(t_info *info)
 
 int		ft_parse_symbols(const char *format, va_list ap)
 {
-	t_info		*info;
+	t_info		info;
 	int			printed;
 
 	printed = 0;
-	info = malloc(sizeof(t_info) * 1);
-	if (!info)
-		return (ERROR);
+	//info = malloc(sizeof(t_info) * 1);
+	// if (!info)
+	// 	return (ERROR);		//굳이 malloc으로 메모리 할당을 하지 않아도 된다.
 	while (*format != 0)
 	{
-		init_struct(info);
+		init_struct(&info);
 		if (*format == '%')
 		{
 			format++;
-			ft_parse_flag(&format, info);
-			ft_parse_width(&format, info, ap);
-			ft_parse_precision(&format, info, ap);
-			printed += ft_parse_type(info, ap, *format);
+			ft_parse_flag(&format, &info);
+			ft_parse_width(&format, &info, ap);
+			ft_parse_precision(&format, &info, ap);
+			printed += ft_parse_type(&info, ap, *format);
 		}
 		else
 			printed += write(1, format, 1);
 		format++;
 	}
-	free(info);
+	// free(info);
 	return (printed);
 }
 
