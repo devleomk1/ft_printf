@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 17:11:49 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/05 18:15:21 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/28 17:06:01 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ int	ft_putchar_len(char c, int *len)
 
 	i = 0;
 	while ((*len)-- > 0)
-	{
-		i = i + write(1, &c, 1);
-	}
+		i += write(1, &c, 1);
 	return (i);
 }
 

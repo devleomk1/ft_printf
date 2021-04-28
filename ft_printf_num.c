@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 14:24:19 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/07 18:07:54 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/04/28 17:04:22 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,3 @@ int	print_p(t_info *info, va_list ap)
 	printed = print_num(info, num);
 	return (printed);
 }
-
-// int	ft_print_num(t_info *info, va_list ap, const char type)
-// {
-// 	int			printed;
-
-// 	printed = 0;
-// 	if (type == 'd' || type == 'i')
-// 		printed = print_di(info, ap);
-// 	else if (type == 'u')
-// 		printed = print_u(info, ap);
-// 	else if (type == 'x' || type == 'X')
-// 		printed = print_xx(info, ap, type);
-// 	else if (type == 'p')
-// 		printed = print_p(info, ap);
-// 	return (printed);
-// }
