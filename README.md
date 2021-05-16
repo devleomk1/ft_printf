@@ -1,6 +1,6 @@
 # ft_printf
 
-주의! Norminette 2.3.3 기반으로 작성되었습니다. 
+⚠️주의! `Norminette 2.3.3` 기반으로 작성되었습니다. 
 
 ## Chapter 1 - Introduction
 
