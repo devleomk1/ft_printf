@@ -6,7 +6,7 @@
 /*   By: jisokang <jisokang@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 14:43:30 by jisokang          #+#    #+#             */
-/*   Updated: 2021/04/06 15:40:23 by jisokang         ###   ########.fr       */
+/*   Updated: 2021/05/16 17:44:03 by jisokang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int				ft_printf(const char *format, ...);
 int				skip_atoi(const char **s);
 void			ft_parse_flag(const char **format, t_info *info);
 void			ft_parse_width(const char **format, t_info *info, va_list ap);
-void			ft_parse_precision(const char **format,
-									t_info *info, va_list ap);
+void			ft_parse_precision
+				(const char **format, t_info *info, va_list ap);
 int				ft_parse_type(t_info *info, va_list ap, const char type);
 
 /*
